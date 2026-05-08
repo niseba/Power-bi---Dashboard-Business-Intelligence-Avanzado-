@@ -121,13 +121,15 @@ La navegación se gestiona con **bookmarks, botones interactivos y un reset de f
 
 ## Lo que aprendí construyendo esto
 
-Dos cosas que no sabía antes de este proyecto y que cambiaron cómo pienso el diseño de dashboards:
+Construí lógica avanzada en DAX para generar títulos dinámicos y señales visuales contextuales que facilitan la interpretación inmediata de métricas y tendencias.
 
-Los **títulos dinámicos en DAX** permiten que el visual comunique solo con texto qué está mostrando en cada momento — sin que el usuario tenga que interpretar el estado de los filtros. Y las **medidas de formato condicional** hacen que los KPIs respondan visualmente al dato, no a un umbral fijo: el color es parte del análisis, no decoración.
 
-El mayor reto técnico fue construir tablas con múltiples variables manteniendo coherencia visual dentro del tema oscuro del dashboard — Power BI tiene limitaciones reales en formato condicional de subtotales que requieren soluciones DAX específicas.
 
-\---
+Diseñé una experiencia de análisis enfocada en usabilidad, asegurando que cada visual respondiera al contexto de filtros y redujera fricción en la exploración de datos.
+
+
+
+Además, resolví limitaciones técnicas de visualización en Microsoft Power BI mediante medidas personalizadas, optimizando consistencia visual, legibilidad y precisión analítica en dashboards con múltiples dimensiones.---
 
 ## Estructura del repositorio
 
@@ -149,395 +151,44 @@ El mayor reto técnico fue construir tablas con múltiples variables manteniendo
 
 \---
 
-## \# 📊 Retail Sales Analytics — BI Dashboard con Pipeline ETL en Python
+## Screenshots
 
-## 
+### <h2>Overview</h2>
 
-## <p align="center">
+<img src="./Screenshots/Overview.png" width="950"/>
 
-## &#x20; <img src="Dashboard.gif" alt="Dashboard interactivo" width="850"/>
+### <h2>Segment Analysis</h2>
 
-## </p>
+<img src="./Screenshots/Segment.png" width="950"/>
 
-## 
+### <h2>Region Analysis</h2>
 
-## <p align="center">
+<img src="./Screenshots/Region.png" width="950"/>
 
-## &#x20; <img src="https://img.shields.io/badge/Python-3.11-blue?logo=python\&logoColor=white"/>
+### <h2>Product Analysis</h2>
 
-## &#x20; <img src="https://img.shields.io/badge/Power%20BI-Desktop-F2C811?logo=powerbi\&logoColor=black"/>
+<img src="./Screenshots/Product.png" width="950"/>
 
-## &#x20; <img src="https://img.shields.io/badge/DAX-40%2B%20Measures-purple"/>
+### <h2>Insights Products</h2>
 
-## &#x20; <img src="https://img.shields.io/badge/Data%20Model-Star%20Schema-teal"/>
+<img src="./Screenshots/Insights\_Products.png" width="950"/>
 
-## </p>
+### <h2>Forecasting</h2>
 
-## 
+<img src="./Screenshots/Forecasting.png" width="950"/>
 
-## \---
+### <h2>Current vs Last Year</h2>
 
-## 
+<img src="./Screenshots/CurrentVsLastYear.png" width="950"/>
 
-## \## 🚀 Executive Summary
+### <h2>Weekly Analysis</h2>
 
-## 
+<img src="./Screenshots/Weekly\_Analysis.png" width="950"/>
 
-## Pipeline ETL automatizado en Python que consolida múltiples fuentes regionales de ventas, las transforma bajo estándares analíticos y alimenta un dashboard ejecutivo en Power BI construido sobre modelo estrella.
+\---
 
-## 
-
-## El proyecto integra:
-
-## 
-
-## \- \*\*Automatización ETL\*\*
-
-## \- \*\*Modelado dimensional\*\*
-
-## \- \*\*Más de 40 medidas DAX\*\*
-
-## \- \*\*Análisis comparativo interanual\*\*
-
-## \- \*\*Visualización ejecutiva orientada a decisión\*\*
-
-## 
-
-## Permite responder preguntas de negocio como:
-
-## 
-
-## \- ¿Qué región presenta mejor rentabilidad?
-
-## \- ¿Qué segmento muestra mayor crecimiento?
-
-## \- ¿Cómo evoluciona el margen semanalmente?
-
-## \- ¿Qué productos impulsan el beneficio?
-
-## 
-
-## \---
-
-## 
-
-## \## 🛠 Stack Tecnológico
-
-## 
-
-## | Capa | Tecnología |
-
-## |------|------------|
-
-## | Extracción y transformación | Python · pandas · glob |
-
-## | Auditoría | Logs automáticos con timestamp |
-
-## | Modelado | Power Query · Star Schema |
-
-## | Análisis | DAX · Time Intelligence |
-
-## | Visualización | Power BI Desktop |
-
-## 
-
-## \---
-
-## 
-
-## \## ⚙️ Pipeline ETL
-
-## 
-
-## El pipeline detecta dinámicamente todos los archivos CSV disponibles y procesa automáticamente múltiples fuentes sin hardcodear nombres.
-
-## 
-
-## \### Extracción
-
-## 
-
-## \- Carga dinámica con `glob`
-
-## \- Compatibilidad con `utf-8-sig`
-
-## \- Manejo de errores de parseo
-
-## 
-
-## \### Transformación
-
-## 
-
-## \- Deduplicación por clave compuesta
-
-## \- Estandarización de fechas con `pd.to\_datetime`
-
-## \- Normalización textual para consistencia dimensional
-
-## 
-
-## \### Carga
-
-## 
-
-## \- Exportación de dataset limpio
-
-## \- Log automático de auditoría
-
-## \- Trazabilidad completa del proceso
-
-## 
-
-## \### Transformaciones adicionales
-
-## 
-
-## \- Corrección regional de formatos
-
-## \- Validación geográfica
-
-## \- Integración dimensional mediante merges validados
-
-## 
-
-## \---
-
-## 
-
-## \## 🧠 Modelo de Datos
-
-## 
-
-## ```text
-
-## &#x20;        DimDate
-
-## &#x20;           |
-
-## DimCustomer ─── FactSales ─── DimProduct
-
-## &#x20;           |         |
-
-## &#x20;     DimGeography  DimShipMode
-
-## ```
-
-## 
-
-## \### Decisiones de modelado
-
-## 
-
-## \- Modelo estrella optimizado
-
-## \- Surrogate keys
-
-## \- Relaciones 1:\*
-
-## \- Filtrado unidireccional
-
-## \- Granularidad a nivel transaccional
-
-## 
-
-## \---
-
-## 
-
-## \## 📈 Análisis DAX
-
-## 
-
-## Más de \*\*40 medidas analíticas\*\* organizadas por funcionalidad.
-
-## 
-
-## \### Time Intelligence
-
-## 
-
-## YoY · MoM · LY · Growth %
-
-## 
-
-## \### KPIs Core
-
-## 
-
-## Ventas · Profit · Costos · Margen
-
-## 
-
-## \### Contexto dinámico
-
-## 
-
-## Medidas con `ALLSELECTED`
-
-## 
-
-## \### Formato condicional inteligente
-
-## 
-
-## KPIs que responden visualmente al comportamiento real del dato
-
-## 
-
-## \### Títulos dinámicos
-
-## 
-
-## Visuales adaptativos según filtros activos
-
-## 
-
-## \---
-
-## 
-
-## \## 📊 Funcionalidades del Dashboard
-
-## 
-
-## | Vista | Objetivo |
-
-## |------|---------|
-
-## | Overview | KPIs ejecutivos |
-
-## | Segment Analysis | Rendimiento por cliente |
-
-## | Region Analysis | Desempeño geográfico |
-
-## | Product Analysis | Rentabilidad por producto |
-
-## | Forecasting | Proyección de ventas |
-
-## | Current vs Last Year | Comparativo interanual |
-
-## | Weekly Analysis | Evolución semanal |
-
-## 
-
-## \---
-
-## 
-
-## \## 💡 Principales aprendizajes
-
-## 
-
-## Implementé lógica avanzada en DAX para construir visuales contextuales capaces de comunicar automáticamente el estado analítico del dashboard.
-
-## 
-
-## También resolví limitaciones nativas de formato en Power BI mediante medidas personalizadas para mantener consistencia visual, legibilidad y precisión analítica en entornos complejos.
-
-## 
-
-## \---
-
-## 
-
-## \## 📁 Estructura del Repositorio
-
-## 
-
-## ```text
-
-## retail-sales-analytics/
-
-## ├── Dataset Superstore/
-
-## ├── Screenshots/
-
-## ├── Dashboard Inteligencia Comercial.pbix
-
-## ├── Dashboard.gif
-
-## └── README.md
-
-## ```
-
-## 
-
-## \---
-
-## 
-
-## \# 📸 Dashboard Screenshots
-
-## 
-
-## <h2>Overview</h2>
-
-## <img src="./Screenshots/Overview.png" width="950"/>
-
-## 
-
-## <h2>Segment Analysis</h2>
-
-## <img src="./Screenshots/Segment.png" width="950"/>
-
-## 
-
-## <h2>Region Analysis</h2>
-
-## <img src="./Screenshots/Region.png" width="950"/>
-
-## 
-
-## <h2>Product Analysis</h2>
-
-## <img src="./Screenshots/Product.png" width="950"/>
-
-## 
-
-## <h2>Insights Products</h2>
-
-## <img src="./Screenshots/Insights\_Products.png" width="950"/>
-
-## 
-
-## <h2>Forecasting</h2>
-
-## <img src="./Screenshots/Forecasting.png" width="950"/>
-
-## 
-
-## <h2>Current vs Last Year</h2>
-
-## <img src="./Screenshots/CurrentVsLastYear.png" width="950"/>
-
-## 
-
-## <h2>Weekly Analysis</h2>
-
-## <img src="./Screenshots/Weekly\_Analysis.png" width="950"/>
-
-## 
-
-## \---
-
-## 
-
-## <p align="center">
-
-## &#x20; <strong>Nicolás Barrios Álvarez</strong><br/>
-
-## &#x20; Data Analyst | BI Developer | Reporting Analyst
-
-## </p>
-
-## 
-
-## <p align="center">
-
-## &#x20; <a href="TU\_LINKEDIN">LinkedIn</a> •
-
-## &#x20; <a href="TU\_GITHUB">GitHub</a>
-
-## </p>
+<p align="center">
+  Desarrollado por <strong>Nicolás Barrios Álvarez</strong><br/>
+  <a href="https://linkedin.com/in/tu-perfil">LinkedIn</a> · <a href="https://github.com/tu-usuario">GitHub</a>
+</p>
 
