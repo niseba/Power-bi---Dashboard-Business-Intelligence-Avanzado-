@@ -116,16 +116,6 @@ La navegación se gestiona con **bookmarks, botones interactivos y un reset de f
 
 ---
 
-## Lo que aprendí construyendo esto
-
-Antes de este proyecto no sabía que DAX podía controlar no solo los números, sino la experiencia completa del dashboard. Los **títulos dinámicos** cambian solos según los filtros activos — el visual le habla al usuario sin que nadie intervenga. Las **medidas de formato condicional** hacen que los KPIs cambien de color según el dato real, no según un umbral hardcodeado: el rojo y el verde son parte del análisis, no decoración.
-
-El reto más exigente fue técnico y visual al mismo tiempo: Power BI no aplica formato condicional de fondo a subtotales y totales. La solución no fue un workaround cosmético — fue diseñar medidas DAX específicas que resolvieran la limitación desde el modelo, manteniendo consistencia visual en todo el dashboard sin excepciones.
-
-El resultado es un dashboard donde cada elemento responde al contexto: los títulos, los colores, las métricas y las tablas se comportan como un sistema coherente, no como visuales independientes apilados.
-
----
-
 ## Estructura del repositorio
 
 ```
