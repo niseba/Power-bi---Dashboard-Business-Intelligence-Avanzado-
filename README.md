@@ -153,7 +153,7 @@ El mayor reto técnico fue construir tablas con múltiples variables manteniendo
 
 ### Overview
 
-!\[Overview](Screenshots/Overview.png)
+!\[Overview](./Screenshots/Overview.png)
 
 ### Segment Analysis
 
