@@ -171,7 +171,7 @@ Además, resolví limitaciones técnicas de visualización en Microsoft Power BI
 
 ### <h2>Insights Products</h2>
 
-<img src="./Screenshots/Insights\_Products.png" width="950"/>
+<img src="./Screenshots/Insights Products.png" width="950"/>
 
 ### <h2>Forecasting</h2>
 
@@ -183,7 +183,7 @@ Además, resolví limitaciones técnicas de visualización en Microsoft Power BI
 
 ### <h2>Weekly Analysis</h2>
 
-<img src="./Screenshots/Weekly\_Analysis.png" width="950"/>
+<img src="./Screenshots/Weekly Analysis.png" width="950"/>
 
 \---
 
