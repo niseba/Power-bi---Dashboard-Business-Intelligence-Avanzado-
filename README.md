@@ -123,15 +123,9 @@ La navegación se gestiona con **bookmarks, botones interactivos y un reset de f
 
 ## Lo que aprendí construyendo esto
 
-Construí lógica avanzada en DAX para generar títulos dinámicos y señales visuales contextuales que facilitan la interpretación inmediata de métricas y tendencias.
+Dos Construí lógica avanzada en DAX para generar títulos dinámicos y señales visuales contextuales que facilitan la interpretación inmediata de métricas y tendencias. Diseñé una experiencia de análisis enfocada en usabilidad, asegurando que cada visual respondiera al contexto de filtros y redujera fricción en la exploración de datos. Además, resolví limitaciones técnicas de visualización en Microsoft Power BI mediante medidas personalizadas, optimizando consistencia visual, legibilidad y precisión analítica en dashboards con múltiples dimensiones.
 
-
-
-Diseñé una experiencia de análisis enfocada en usabilidad, asegurando que cada visual respondiera al contexto de filtros y redujera fricción en la exploración de datos.
-
-
-
-Además, resolví limitaciones técnicas de visualización en Microsoft Power BI mediante medidas personalizadas, optimizando consistencia visual, legibilidad y precisión analítica en dashboards con múltiples dimensiones.---
+\---
 
 ## Estructura del repositorio
 
