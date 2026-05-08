@@ -1,148 +1,172 @@
-# 📊 Dashboard de Business Intelligence con Pipeline ETL en Python – Power BI
+# 📊 Retail Sales Analytics — BI Dashboard con Pipeline ETL en Python
 
 <p align="center">
-  <img src="Dashboard.gif" alt="PowerBI Dashboard" width="600"/>
+  <img src="Dashboard.gif" alt="Dashboard Overview interactivo" width="700"/>
 </p>
 
-## 📌 Descripción General
-
-Solución integral de **Business Intelligence** para análisis de desempeño comercial, rentabilidad y eficiencia operativa, construida sobre un **pipeline ETL completo en Python** que integra múltiples fuentes de datos, las transforma y las entrega como insumo limpio y estructurado para Power BI.
-
-Se implementó un modelo dimensional bajo **Star Schema (metodología Kimball)**, garantizando:
-
-✔️ Alto rendimiento en consultas
-✔️ Escalabilidad del modelo
-✔️ Claridad analítica
-✔️ Confiabilidad en los KPIs
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.11-blue?logo=python&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Power%20BI-Desktop-F2C811?logo=powerbi&logoColor=black"/>
+  <img src="https://img.shields.io/badge/DAX-40%2B%20medidas-purple"/>
+  <img src="https://img.shields.io/badge/Modelo-Star%20Schema-teal"/>
+</p>
 
 ---
 
-## 🎯 Valor para el Negocio
+## El proyecto
 
-Este dashboard permite:
+Las empresas con operaciones regionales rara vez reciben sus datos en un solo archivo limpio. Este proyecto simula exactamente eso: **5 archivos CSV independientes, uno por región**, que llegan con formatos inconsistentes, fechas mixtas y claves sin unificar.
 
-- 📈 Identificar productos, regiones y segmentos de mayor y menor desempeño
-- 💰 Analizar tendencias de ingresos, utilidad y margen
-- 🚚 Evaluar eficiencia logística
-- 📊 Monitorear crecimiento interanual
-- 🧭 Apoyar procesos de planeación estratégica y forecasting
+El pipeline ETL los consolida, limpia y estructura automáticamente. El resultado alimenta un modelo dimensional en Power BI con más de 40 medidas DAX que permiten responder preguntas de negocio reales: ¿qué región tiene el mejor margen? ¿qué segmento creció más interanualmente? ¿cuál es la tendencia semanal de ventas netas?
 
 ---
 
-## 📂 Dataset
+## Stack
 
-- **📍 Fuente:** Dataset público de ventas de una multinacional tecnológica
-- **📍 Granularidad:** Línea de orden de venta
-
-### Variables principales
-
-- Sales, Profit, Quantity, Discount
-- Order Date, Ship Date
-- Customer, Product, Geography, Ship Mode
+| Capa | Tecnología |
+|---|---|
+| Extracción y transformación | Python · pandas · glob |
+| Auditoría del proceso | Log automático con timestamp y conteo de filas |
+| Modelado | Power Query · Star Schema (Kimball) |
+| Análisis y KPIs | DAX — Time Intelligence, YoY, MoM, contextos dinámicos |
+| Visualización | Power BI Desktop |
 
 ---
 
-## 🧹 Pipeline ETL en Python
+## Pipeline ETL
 
-El proceso ETL fue desarrollado de forma modular en Python con **pandas**, estructurado en tres capas independientes:
+El ETL está diseñado para ser **agnóstico a la cantidad de archivos**: detecta y carga dinámicamente todos los CSV disponibles en la carpeta de entrada, sin importar cuántos sean. En este caso procesa 5 archivos regionales (Central, East, South, West + consolidado).
 
-### ⚙️ Extracción
-- Detección y carga dinámica de múltiples archivos CSV mediante `glob`
-- Soporte para encoding `utf-8-sig` y manejo de líneas con errores
+**Extracción**
+- Carga dinámica con `glob` — no requiere hardcodear nombres de archivos
+- Soporte para encoding `utf-8-sig` y manejo de líneas con errores de parseo
 
-### 🔄 Transformación
-- Eliminación de duplicados por clave compuesta (`Order ID`, `Product ID`, `Customer ID`)
-- Estandarización de fechas con manejo de formatos mixtos y detección de valores inválidos
-- Normalización de campos de texto (strip + title case) para garantizar consistencia
+**Transformación**
+- Deduplicación por clave compuesta (`Order ID` + `Product ID` + `Customer ID`)
+- Estandarización de fechas con `pd.to_datetime` y detección de valores inválidos
+- Normalización de texto: strip + title case para garantizar consistencia en dimensiones
 
-### 📤 Carga
-- Exportación a CSV procesado como fuente directa para Power BI
-- Generación automática de **log de auditoría** con timestamp, conteo de filas exportadas y columnas del dataset
+**Carga**
+- Exportación a CSV limpio como fuente directa para Power BI
+- Generación automática de **log de auditoría** con timestamp, filas procesadas y columnas exportadas — trazabilidad completa del proceso
 
-### Transformaciones complementarias en Power Query
+**Transformaciones complementarias en Power Query**
 - Corrección de formatos numéricos y monetarios por configuración regional
-- Depuración de datos geográficos (ciudad–estado) para garantizar unicidad
+- Depuración de pares ciudad–estado para garantizar unicidad geográfica
 - Generación de surrogate keys e integración de dimensiones con FactSales mediante merges validados
 
 ---
 
-## 🧩 Arquitectura del Modelo de Datos
+## Modelo de datos — Star Schema
 
-Se implementó un esquema en estrella con la siguiente estructura:
+```
+         DimDate
+            |
+DimCustomer ─── FactSales ─── DimProduct
+            |         |
+      DimGeography  DimShipMode
+```
 
-### 📍 Tabla de Hechos
+**FactSales** contiene las métricas de negocio: `Sales`, `Profit`, `Quantity`, `Discount`, `Order Date`, `Ship Date` y las claves foráneas hacia cada dimensión.
 
-**FactSales**
-
-- Sales, Profit, Quantity, Discount
-- Order Date, Ship Date
-- CustomerKey, ProductKey, GeographyKey, ShipModeKey
-
-### 📍 Tablas Dimensión
-
-- **DimCustomer:** Cliente y Segmento
-- **DimProduct:** Producto, Categoría y Subcategoría
-- **DimGeography:** País, Estado, Ciudad, Región
-- **DimShipMode:** Tipo de Envío
-- **DimDate:** Construcción dinámica mediante DAX (CALENDAR) basada en rango real de datos
-
-### ⚙️ Decisiones de Modelado
-
-- Integración de Categoría y Subcategoría en DimProduct (evitando Snowflake)
-- Implementación de surrogate keys en todas las dimensiones
-- Definición de granularidad a nivel de línea de venta
-- Relaciones 1:\* con filtrado unidireccional
+Decisiones de modelado destacadas:
+- `Categoría` y `Subcategoría` integradas en `DimProduct` — evita snowflake innecesario
+- Surrogate keys en todas las dimensiones
+- `DimDate` construida con DAX (`CALENDAR`) basada en el rango real de los datos
+- Relaciones 1:* con filtrado unidireccional
+- Granularidad definida a nivel de línea de venta
 
 ---
 
-## 📈 Diseño del Dashboard y Navegación
+## DAX — más de 40 medidas
 
-La navegación se gestiona mediante:
+El modelo incluye medidas organizadas en **display folders** por función:
 
-🔖 Bookmarks &nbsp; 🔘 Botones interactivos &nbsp; 🔄 Reset de filtros
+**Time Intelligence**
+`Sales Growth YoY%` · `Sales Growth MoM%` · `Total Sales LM` · `Total Sales Net LY` · `Gross Margin LY` · `Total Transactions LY` · `YoY% Profit` · `YoY% Gross Margin`
 
-### 📊 Secciones Principales
+**Métricas core**
+`Total Sales Net` · `Total Profit` · `Total Costs` · `Gross Margin` · `AVG Unit Price` · `AVG OrderToShip Day` · `Total Transactions`
 
-- Overview
-- Segmentación
-- Análisis Regional
-- Análisis de Producto
-- Product Insights
-- Forecasting
-- Actual vs Año Anterior
-- Análisis Semanal
+**Contexto dinámico**
+`Total Selección Totales` · `Total Selección Totales Ajustados` · `Total Selección Totales Insights` — medidas con `ALLSELECTED` para mantener contexto correcto bajo cualquier combinación de filtros
 
----
+**Formato condicional dinámico**
+`CF for KPI Sales` · `CF for KPI Profit` · `CF for KPI Gross Margin` · `CF for KPI Total Transactions` — medidas DAX que controlan el color de los KPIs según el comportamiento del dato, sin depender de reglas estáticas
 
-## 🧠 Retos Técnicos y Soluciones
-
-🔹 Múltiples archivos CSV sin clave unificada → Extracción dinámica y deduplicación por clave compuesta en Python
-
-🔹 Fechas en formatos mixtos → Estandarización con `pd.to_datetime` y detección de valores inválidos
-
-🔹 Formato incorrecto de datos monetarios → Ajuste de configuración regional en Power Query
-
-🔹 Ausencia de claves geográficas → Diseño e implementación de surrogate keys
-
-🔹 Cálculo correcto de porcentajes dinámicos → Gestión avanzada del filter context con `ALLSELECTED`
-
-🔹 Navegación compleja → Implementación de bookmarks y control de estados
+**Títulos dinámicos**
+`Title Sales NOW vs LY` · `Title Week Analysis` — los títulos de los visuales cambian automáticamente según los filtros activos, mejorando la lectura del dashboard sin intervención manual
 
 ---
 
-## 🚀 Habilidades Demostradas
+## Dashboard — 6 pestañas
 
-✔️ Pipeline ETL modular en Python (pandas)
-✔️ Integración de múltiples fuentes de datos CSV
-✔️ Auditoría automatizada del proceso de carga
-✔️ Modelado dimensional bajo Star Schema (Kimball)
-✔️ Limpieza y estandarización avanzada de datos
-✔️ Desarrollo de métricas y KPIs en DAX (Time Intelligence, YoY, acumulados, variaciones)
-✔️ Gestión avanzada de contextos de filtro en DAX
-✔️ Análisis temporal mediante tablas calendario
-✔️ Diseño de dashboards ejecutivos orientados a toma de decisiones
-✔️ Optimización de rendimiento mediante reducción de cardinalidad y buenas prácticas de modelado
+La navegación se gestiona con **bookmarks, botones interactivos y un reset de filtros global**.
+
+| Pestaña | Qué responde |
+|---|---|
+| Overview | Vista ejecutiva: ventas, margen, transacciones y tendencias por región y categoría |
+| Segment | Desempeño por segmento de cliente con drill-down a estado y cliente |
+| Region | Análisis geográfico detallado con comparativa interanual |
+| Product | Rentabilidad por categoría, subcategoría y producto |
+| Forecasting | Proyección de ventas con bandas de confianza |
+| Current vs Last Year | Comparativa directa período a período con variaciones |
 
 ---
 
-> 🎯 **Nota:** Este proyecto fue desarrollado con enfoque en escenarios empresariales reales, mejores prácticas de Business Intelligence y un pipeline de datos estructurado de extremo a extremo.
+## Lo que aprendí construyendo esto
+
+Dos cosas que no sabía antes de este proyecto y que cambiaron cómo pienso el diseño de dashboards:
+
+Los **títulos dinámicos en DAX** permiten que el visual comunique solo con texto qué está mostrando en cada momento — sin que el usuario tenga que interpretar el estado de los filtros. Y las **medidas de formato condicional** hacen que los KPIs respondan visualmente al dato, no a un umbral fijo: el color es parte del análisis, no decoración.
+
+El mayor reto técnico fue construir tablas con múltiples variables manteniendo coherencia visual dentro del tema oscuro del dashboard — Power BI tiene limitaciones reales en formato condicional de subtotales que requieren soluciones DAX específicas.
+
+---
+
+## Estructura del repositorio
+
+```
+📁 retail-sales-analytics/
+├── 📁 data/
+│   ├── raw/          # 5 CSVs regionales originales
+│   └── processed/    # Output del ETL
+├── 📁 etl/
+│   ├── extract.py
+│   ├── transform.py
+│   ├── load.py
+│   └── audit_log/    # Logs automáticos con timestamp
+├── 📁 screenshots/   # Capturas de las 6 pestañas
+├── RetailSalesAnalytics.pbix
+├── Dashboard.gif
+└── README.md
+```
+
+---
+
+## Screenshots
+
+### Overview
+![Overview](screenshots/overview.png)
+
+### Segment Analysis
+![Segment](screenshots/segment.png)
+
+### Region Analysis
+![Region](screenshots/region.png)
+
+### Product Analysis
+![Product](screenshots/product.png)
+
+### Forecasting
+![Forecasting](screenshots/forecasting.png)
+
+### Current vs Last Year
+![Current vs LY](screenshots/current_vs_ly.png)
+
+---
+
+<p align="center">
+  Desarrollado por <strong>Nicolás Barrios Álvarez</strong><br/>
+  <a href="https://linkedin.com/in/tu-perfil">LinkedIn</a> · <a href="https://github.com/tu-usuario">GitHub</a>
+</p>
