@@ -13,8 +13,10 @@
 
 ---
 
-## El proyecto
+## Link del Dashboard en Power BI Service
+https://app.powerbi.com/view?r=eyJrIjoiZjAzNWY0MGMtYmUxYy00NTA0LTgyN2MtMjE4NDA3ZmEyNjkxIiwidCI6ImI0OWRiNjI0LTI1NDYtNDI1OS1iZjM2LTE5OWM2ZTk4ODAzMyIsImMiOjR9&pageName=2d01edffa55e8d4c8e21
 
+## El proyecto
 Las empresas con operaciones regionales rara vez reciben sus datos en un solo archivo limpio. Este proyecto simula exactamente eso: **5 archivos CSV independientes, uno por región**, que llegan con formatos inconsistentes, fechas mixtas y claves sin unificar.
 
 El pipeline ETL los consolida, limpia y estructura automáticamente. El resultado alimenta un modelo dimensional en Power BI con más de 40 medidas DAX que permiten responder preguntas de negocio reales: ¿qué región tiene el mejor margen? ¿qué segmento creció más interanualmente? ¿cuál es la tendencia semanal de ventas netas?
