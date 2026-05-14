@@ -14,7 +14,7 @@
 ---
 
 ## Link del Dashboard en Power BI Service
-https://app.powerbi.com/view?r=eyJrIjoiZjAzNWY0MGMtYmUxYy00NTA0LTgyN2MtMjE4NDA3ZmEyNjkxIiwidCI6ImI0OWRiNjI0LTI1NDYtNDI1OS1iZjM2LTE5OWM2ZTk4ODAzMyIsImMiOjR9&pageName=2d01edffa55e8d4c8e21
+https://app.powerbi.com/view?r=eyJrIjoiZjAzNWY0MGMtYmUxYy00NTA0LTgyN2MtMjE4NDA3ZmEyNjkxIiwidCI6ImI0OWRiNjI0LTI1NDYtNDI1OS1iZjM2LTE5OWM2ZTk4ODAzMyIsImMiOjR9
 
 ## El proyecto
 Las empresas con operaciones regionales rara vez reciben sus datos en un solo archivo limpio. Este proyecto simula exactamente eso: **5 archivos CSV independientes, uno por región**, que llegan con formatos inconsistentes, fechas mixtas y claves sin unificar.
