@@ -82,7 +82,7 @@ Decisiones de modelado destacadas:
 
 ## DAX — más de 40 medidas
 
-El modelo incluye medidas organizadas en **display folders** por función:
+El modelo incluye medidas de tipo:
 
 **Time Intelligence**
 
