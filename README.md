@@ -85,19 +85,14 @@ Decisiones de modelado destacadas:
 El modelo incluye medidas organizadas en **display folders** por función:
 
 **Time Intelligence**
-`Sales Growth YoY%` · `Sales Growth MoM%` · `Total Sales LM` · `Total Sales Net LY` · `Gross Margin LY` · `Total Transactions LY` · `YoY% Profit` · `YoY% Gross Margin`
 
 **Métricas core**
-`Total Sales Net` · `Total Profit` · `Total Costs` · `Gross Margin` · `AVG Unit Price` · `AVG OrderToShip Day` · `Total Transactions`
 
 **Contexto dinámico**
-`Total Selección Totales` · `Total Selección Totales Ajustados` · `Total Selección Totales Insights` — medidas con `ALLSELECTED` para mantener contexto correcto bajo cualquier combinación de filtros
 
 **Formato condicional dinámico**
-`CF for KPI Sales` · `CF for KPI Profit` · `CF for KPI Gross Margin` · `CF for KPI Total Transactions` — medidas DAX que controlan el color de los KPIs según el comportamiento del dato, sin depender de reglas estáticas
 
 **Títulos dinámicos**
-`Title Sales NOW vs LY` · `Title Week Analysis` — los títulos de los visuales cambian automáticamente según los filtros activos
 
 ---
 
